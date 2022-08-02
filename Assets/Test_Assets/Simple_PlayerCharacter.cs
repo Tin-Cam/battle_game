@@ -7,12 +7,15 @@ public class Simple_PlayerCharacter : MonoBehaviour, ICharacter, IPlayerControll
     public int maxHealth { get; }
     public int currentHealth { get; }
 
+    [SerializeField]
+    private int moveSpeed;
 
+    private Rigidbody2D rig;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rig = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -21,8 +24,8 @@ public class Simple_PlayerCharacter : MonoBehaviour, ICharacter, IPlayerControll
         
     }
 
-    public void Move(){
-
+    public void Move(Vector2 movement){
+        rig.MovePosition(rig.position + movement * moveSpeed * Time.deltaTime);
     }
 
     public void Action1(){
