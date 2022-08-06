@@ -18,11 +18,13 @@ public class Simple_PlayerCharacter : MonoBehaviour, ICharacter, IPlayerControll
     private float attackSpeedTimer;
 
     private Rigidbody2D rig;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -31,8 +33,17 @@ public class Simple_PlayerCharacter : MonoBehaviour, ICharacter, IPlayerControll
         UpdateSword();
     }
 
-    public void Move(Vector2 movement){
+    public void Move(Vector2 movement) {
         rig.MovePosition(rig.position + movement * moveSpeed * Time.deltaTime);
+
+        if(movement != Vector2.zero) {
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetBool("IsMoving", true);
+        }
+        else {
+            animator.SetBool("IsMoving", false);
+        }
     }
 
     // Sword attack
